@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { akitaDevtools } from '@datorama/akita';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent {}
+export class AppComponent {
+  constructor(private ngZone: NgZone) {
+    if (!environment.production) {
+      akitaDevtools(ngZone, { name: 'Atenea-app' });
+    }
+  }
+}
