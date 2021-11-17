@@ -1,0 +1,12 @@
+.no-results {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 490px;
+
+  &__message {
+    padding-top: 10px;
+    font-size: 20px;
+  }
+}
