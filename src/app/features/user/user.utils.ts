@@ -1,4 +1,4 @@
-import { Page } from "src/app/core/core.model";
+import { Page } from "@core/core.model";
 
 export const defaultPagination: Page = {
   page: 1,
