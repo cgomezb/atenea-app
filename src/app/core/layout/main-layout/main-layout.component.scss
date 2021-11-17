@@ -1,0 +1,25 @@
+.main-layout {
+  display: block;
+  height: 100vh;
+  background-color: #fafafa;
+
+  &__nav {
+    padding: 20px 40px 10px;
+  }
+
+  &__nav-item {
+    color: #141518;
+    font-size: 18px;
+    line-height: 16px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:first-of-type {
+      margin-right: 20px;
+    }
+
+    &--active {
+      border-bottom: 3px solid #0a95e1;
+    }
+  }
+}
