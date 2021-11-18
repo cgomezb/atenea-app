@@ -1,0 +1,16 @@
+<div class="search-control">
+  <input
+    type="text"
+    class="search-control__input"
+    spellcheck="false"
+    autocomplete="false"
+    placeholder="Search"
+    maxlength="200"
+    [(ngModel)]="query"
+    (keyup.enter)="onSearch()"
+  >
+  <div class="search-control__clear" *ngIf="query.trim()" (click)="onClear()">&times;</div>
+  <button class="mat-raised-button mat-primary" (click)="onSearch()">
+    Search
+  </button>
+</div>
