@@ -1,4 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles layer based on ITCSS convention */
+/* ITCSS is a CSS architecture created by Harry Roberts */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* SETTINGS */
+@import 'styles/1-settings/settings';
+
+/* TOOLS */
+@import 'styles/2-tools/mixins';
+@import 'styles/2-tools/functions';
+
+/* GENERIC */
+@import 'styles/3-generic/normalize';
+@import 'styles/3-generic/generic';
+
+/* TAGS */
+@import 'styles/4-tags/tags';
+
+/* OBJECTS */
+@import 'styles/5-objects/objects';
+
+/* UTILITIES */
+@import 'styles/7-utilities/utilities';
