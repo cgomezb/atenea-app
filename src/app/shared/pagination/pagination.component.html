@@ -1,0 +1,21 @@
+<div class="paging">
+  <div class="paging__total-records">{{getRecordsRange()}}</div>
+  <div class="paging__pages">
+    <div class="paging__group-control" *ngIf="totalPages > 1">
+      <div
+        class="paging__control"
+        (click)="selectPage(NavOption.Prev)"
+      ><i class="icon-arrow-left"></i></div>
+    </div>
+    <div class="paging__page"
+      *ngFor="let page of getPages()"
+      [ngClass]="{'paging__page--active': page === currentPage}"
+      (click)="selectPage(page)">{{page}}
+    </div>
+    <div class="paging__group-control" *ngIf="totalPages > 1">
+      <div class="paging__control" (click)="selectPage(NavOption.Next)">
+        <i class="icon-arrow-right"></i>
+      </div>
+    </div>
+  </div>
+</div>

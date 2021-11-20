@@ -5,13 +5,15 @@ import { LoaderComponent, SearchControlComponent } from '.';
 import { MatDialogModule } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TableComponent } from './table/table.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
     LoaderComponent,
     SearchControlComponent,
     ConfirmDialogComponent,
-    TableComponent
+    TableComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { TableComponent } from './table/table.component';
     LoaderComponent,
     SearchControlComponent,
     ConfirmDialogComponent,
+    PaginationComponent,
     // External
     MatDialogModule
   ]
