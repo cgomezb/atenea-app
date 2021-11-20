@@ -29,3 +29,18 @@ export interface User {
   email: string;
   learnings?: string[];
 }
+
+export interface UserQueryParameters {
+  query: string;
+  page: string;
+  offset: string;
+  count: string;
+}
+
+export interface CreateUserResponse {
+  user: User;
+}
+
+export interface DeleteUserResponse {
+  userId: string;
+}
