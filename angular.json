@@ -90,6 +90,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": ["scss"],
             "assets": [
