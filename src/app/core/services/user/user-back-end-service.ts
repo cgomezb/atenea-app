@@ -26,20 +26,22 @@ export class UserBackEndService {
     const paged = filtered.slice(parseInt(offset), parseInt(offset) + parseInt(count));
 
     return of({ users: paged, totalCount: filtered.length })
-      .pipe(delay(this.delayTime));;
+      .pipe(delay(this.delayTime));
   }
 
-  public createUser(user: User): CreateUserResponse {
+  public createUser(user: User): Observable<CreateUserResponse> {
     user.id = this.generateId();
     this.users.push(user);
 
-    return { user };
+    return of({ user })
+      .pipe(delay(this.delayTime));
   }
 
-  public deleteUser(userId: string): DeleteUserResponse {
+  public deleteUser(userId: string): Observable<DeleteUserResponse> {
     this.users = this.users.filter(user => user.id !== userId);
   
-    return { userId };
+    return of({ userId })
+      .pipe(delay(this.delayTime));
   }
 
   private generateId(): string {
