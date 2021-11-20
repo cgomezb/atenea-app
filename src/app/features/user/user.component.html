@@ -1,1 +1,58 @@
-<p>User Component</p>
+<app-loader
+  *ngIf="(userQuery.loading$ | async) as loading"
+  [show]="loading"
+  [opacity]="0.85">
+</app-loader>
+
+<div class="user">
+  <div class="user__container">
+    <div class="user-header">
+      <div class="user-header__search-control">
+        <app-search-control (search)="onSearchChanged($event)"></app-search-control>
+      </div>
+      <div class="user-header__actions">
+        <button class="mat-raised-button mat-primary" (click)="onUserCreated()">New</button>
+      </div>
+    </div>
+    <div class="user-body">
+      <div class="user-body__table">
+        <app-table *ngIf="(userQuery.totalCount$ | async) as totalCount; else noRecords">
+          <thead table-header>
+            <tr>
+              <th *ngFor="let header of headers">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody table-body>
+            <tr *ngFor="let user of (userQuery.users$ | async)">
+              <td>
+                <img class="loader__icon" src="assets/img/avatar-{{user.avatar}}.svg" [style.width.px]="50">
+              </td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td class="user-actions">
+                <button
+                  *ngIf="user.learnings?.length"
+                  class="user-actions__button mat-raised-button mat-primary"
+                  (click)="onLearningDialogOpened(user)"
+                >Learnings</button>
+                <button
+                  class="user-actions__button mat-raised-button mat-primary"
+                  (click)="onUserDeleted(user)"
+                >Delete</button>
+              </td>
+            </tr>
+        </app-table>
+        <ng-template #noRecords>
+          <app-no-results></app-no-results>
+        </ng-template>
+      </div>
+      <div class="user-body__pagination" *ngIf="(userQuery.totalCount$ | async)">
+        <app-pagination
+          [paging]="(userQuery.paging$ | async)"
+          (pageChanged)="onPageChanged($event)"
+        ></app-pagination>
+      </div>
+    </div>
+
+  </div>
+</div>
