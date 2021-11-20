@@ -6,6 +6,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TableComponent } from './table/table.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { NoResultsComponent } from '@shared/no-results/no-results.component';
 
 @NgModule({
   declarations: [
@@ -13,11 +14,13 @@ import { PaginationComponent } from './pagination/pagination.component';
     SearchControlComponent,
     ConfirmDialogComponent,
     TableComponent,
-    PaginationComponent
+    PaginationComponent,
+    NoResultsComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     SearchControlComponent,
     ConfirmDialogComponent,
     PaginationComponent,
+    NoResultsComponent,
     // External
     MatDialogModule
   ]
