@@ -24,6 +24,7 @@
     "@datorama/akita": "^6.2.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
+    "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "@types/jasmine": "~3.6.0",
     "@types/jest": "latest",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^8.3.3",
     "jasmine-core": "~3.7.0",
     "jest": "latest",
     "karma-coverage": "~2.0.3",
