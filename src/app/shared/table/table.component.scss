@@ -1,4 +1,4 @@
-@import '@styles/2-tools/mixins';
+@import '../../../styles/2-tools/mixins';
 
 .table {
   @include flex($alignHeight:flex-start);

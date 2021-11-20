@@ -1,4 +1,4 @@
-@import '@styles/styles/2-tools/mixins';
+@import '../../../styles/2-tools/mixins';
 
 .paging {
   @include flex($alignWidth:flex-start);
