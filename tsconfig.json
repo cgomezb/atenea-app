@@ -24,6 +24,7 @@
       "@core/*": ["app/core/*"],
       "@features/*": ["app/features/*"],
       "@shared/*": ["app/shared/*"],
+      "@styles/*": ["app/styles/*"],
       "@env": ["environments/environment"],
     }
   },

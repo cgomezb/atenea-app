@@ -1,0 +1,7 @@
+@import '@styles/2-tools/mixins';
+
+.table {
+  @include flex($alignHeight:flex-start);
+  height: 490px;
+  overflow-y: scroll;
+}

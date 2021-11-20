@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { LoaderComponent, SearchControlComponent } from '.';
 import { MatDialogModule } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
     LoaderComponent,
     SearchControlComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TableComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     CommonModule,
 
     // Internal
+    TableComponent,
     LoaderComponent,
     SearchControlComponent,
     ConfirmDialogComponent,
