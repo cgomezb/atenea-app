@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { userAvatars } from '@features/user';
@@ -10,12 +10,14 @@ import { userAvatars } from '@features/user';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class CreateUserDialogComponent {
+export class CreateUserDialogComponent implements OnInit {
   public form: FormGroup;
   public avatars = userAvatars
 
-  constructor(public dialogRef: MatDialogRef<CreateUserDialogComponent>) {
-   const [defaultAvatar] = this.avatars;
+  constructor(public dialogRef: MatDialogRef<CreateUserDialogComponent>) {}
+
+  ngOnInit(): void {
+    const [defaultAvatar] = this.avatars;
 
     this.form = new FormGroup({
       avatar: new FormControl(defaultAvatar.value),
