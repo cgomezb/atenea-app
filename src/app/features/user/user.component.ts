@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'atenea-user',
+  selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

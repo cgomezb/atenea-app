@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'atenea-learning',
+  selector: 'app-learning',
   templateUrl: './learning.component.html',
   styleUrls: ['./learning.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

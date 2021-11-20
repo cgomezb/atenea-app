@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'atenea-search-control',
+  selector: 'app-search-control',
   templateUrl: './search-control.component.html',
   styleUrls: ['./search-control.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
