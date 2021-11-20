@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { LoaderComponent, SearchControlComponent } from '.';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  LoaderComponent,
+  SearchControlComponent,
+  ConfirmDialogComponent,
+  TableComponent,
+  PaginationComponent,
+  NoResultsComponent
+} from '.';
+
 import { MatDialogModule } from "@angular/material/dialog";
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { TableComponent } from './table/table.component';
-import { PaginationComponent } from './pagination/pagination.component';
-import { NoResultsComponent } from '@shared/no-results/no-results.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +33,7 @@ import { NoResultsComponent } from '@shared/no-results/no-results.component';
   ],
   exports: [
     CommonModule,
-
+    ReactiveFormsModule,
     // Internal
     TableComponent,
     LoaderComponent,
@@ -33,7 +42,10 @@ import { NoResultsComponent } from '@shared/no-results/no-results.component';
     PaginationComponent,
     NoResultsComponent,
     // External
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ]
 })
 
