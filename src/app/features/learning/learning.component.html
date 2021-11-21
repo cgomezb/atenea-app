@@ -31,6 +31,14 @@
                   class="learning-actions__button mat-raised-button mat-primary"
                   (click)="onLearningDeleted(learning)"
                 >Delete</button>
+                <button
+                  class="learning-actions__button mat-raised-button mat-primary"
+                  (click)="onStatusChanged(learning)"
+                >{{isArchiveStatus(learning.status) ? 'Unarchive' : 'Archive'}}</button>
+                <button
+                  class="learning-actions__button mat-raised-button mat-primary"
+                  (click)="onUserAssigned()"
+                >Assign Users</button>
               </td>
             </tr>
         </app-table>

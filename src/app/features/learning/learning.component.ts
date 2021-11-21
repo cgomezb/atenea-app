@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Learning, Page } from '@core/core.model';
+import { Learning, LearningStatus, Page } from '@core/core.model';
 import { LearningService } from '@core/services';
-import { learningHeaders } from '@features/learning';
+import { defaultPagination, learningHeaders } from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
 import { Subject } from 'rxjs';
 
@@ -24,7 +24,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('ngOnInit');
+    this.learningService.setParameters({ page: defaultPagination });
   }
 
   onSearchChanged(query: string): void {
@@ -41,6 +41,20 @@ export class LearningComponent implements OnInit, OnDestroy {
 
   onPageChanged(page: Page): void {
     console.log('onPageChanged');
+  }
+
+  onStatusChanged({ id, status }: Learning) {
+    console.log('onStatusChanged');
+  }
+
+  isArchiveStatus(status: LearningStatus) {
+    return [
+      LearningStatus.archive
+    ].includes(status);
+  }
+
+  onUserAssigned(): void {
+    console.log('onUserAssigned');
   }
 
   ngOnDestroy(): void {
