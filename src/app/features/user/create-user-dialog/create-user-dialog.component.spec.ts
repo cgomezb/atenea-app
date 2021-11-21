@@ -44,12 +44,14 @@ describe('CreateUserDialogComponent', () => {
   describe('save form', () => {
     it('should not close the dialog', () => {
       component.ngOnInit();
-  
-      expect(component.form.value).toEqual({
-        avatar: 1,
-        name: null,
-        email: null
+      component.form.patchValue({
+        name: '',
+        email: 'jsmith@email.com'
       });
+
+      component.save();
+      
+      expect(component.dialogRef.close).not.toHaveBeenCalled();
     });
 
     it('should close the dialog with the form value', () => {
