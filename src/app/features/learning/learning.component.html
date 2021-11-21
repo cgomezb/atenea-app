@@ -25,7 +25,7 @@
           <tbody table-body>
             <tr *ngFor="let learning of (learningQuery.learnings$ | async)">
               <td>{{learning.name}}</td>
-              <td>{{learning.status}}</td>
+              <td class="learning-status">{{learning.status}}</td>
               <td class="learning-actions">
                 <button
                   class="learning-actions__button mat-raised-button mat-primary"
@@ -37,7 +37,7 @@
                 >{{isArchiveStatus(learning.status) ? 'Unarchive' : 'Archive'}}</button>
                 <button
                   class="learning-actions__button mat-raised-button mat-primary"
-                  (click)="onUserAssigned()"
+                  (click)="onUserAssigned(learning)"
                 >Assign Users</button>
               </td>
             </tr>
