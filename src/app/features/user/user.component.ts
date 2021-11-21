@@ -4,10 +4,14 @@ import { UserQuery } from '@features/user/store/user.query';
 import { MatDialog } from "@angular/material/dialog";
 import { Subject } from 'rxjs';
 import { Page, User } from '@core/core.model';
-import { userHeaders } from '@features/user';
-import { CreateUserDialogComponent } from '@features/user/create-user-dialog/create-user-dialog.component';
-import { createUserDialogConfig, defaultPagination } from '@features/user/user.utils';
+import {
+  userHeaders,
+  CreateUserDialogComponent,
+  LearningDialogComponent
+} from '@features/user';
+import { userDialogConfig, defaultPagination, userConfirmDialogConfig } from '@features/user/user.utils';
 import { filter, takeUntil } from 'rxjs/operators';
+import { ConfirmDialogComponent } from '@shared/index';
 
 @Component({
   selector: 'app-user',
@@ -35,7 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onUserCreated(): void {
-    const dialogRef = this.dialog.open(CreateUserDialogComponent, createUserDialogConfig);
+    const dialogRef = this.dialog.open(CreateUserDialogComponent, userDialogConfig);
 
     dialogRef.afterClosed()
       .pipe(
@@ -46,11 +50,24 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onLearningDialogOpened({ learnings }: User) {
-    console.log(learnings);
+    if (!learnings?.length) {
+      return;
+    }
+
+    this.dialog.open(LearningDialogComponent, { ...userDialogConfig, data: { learnings } });
   }
 
   onUserDeleted({ id }: User): void {
-    console.log(id);
+    if (!id) { return; }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, userConfirmDialogConfig);
+    
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(toDelete => Boolean(toDelete))
+      )
+      .subscribe(() => this.deleteUser(id));
   }
 
   onPageChanged(page: Page): void {
@@ -65,6 +82,19 @@ export class UserComponent implements OnInit, OnDestroy {
           console.log('Created');
         },
         (err: string) => console.log(`Error deleting user: ${err}`)
+      );
+  }
+
+  private deleteUser(id: string): void {
+    if (!id) { return; }
+  
+    this.userService.deleteUser(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Deleted');
+        },
+        (err) => console.log(`Error deleting user: ${err}`)
       );
   }
 

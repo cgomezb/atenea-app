@@ -17,6 +17,14 @@ export const userAvatars: { name: string, value: number }[] = [
 
 // Dialog config
 
-export const createUserDialogConfig = {
+export const userDialogConfig = {
   disableClose: true
+}
+
+export const userConfirmDialogConfig = {
+  disableClose: true,
+  data: {
+    title: 'Delete user',
+    message: `Are you sure do you want to delete the user?`
+  }
 }
