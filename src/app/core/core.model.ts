@@ -44,3 +44,26 @@ export interface CreateUserResponse {
 export interface DeleteUserResponse {
   userId: string;
 }
+
+// Learning
+
+export interface Learning {
+  id?: string;
+  name: string;
+  status: LearningStatus;
+}
+
+export enum LearningStatus {
+  archive = 'archive',
+  unarchive = 'unarchive'
+}
+
+export interface LearningParameters {
+  query: string;
+  page: Page;
+}
+
+export interface LearningResponse {
+  learnings: Learning[];
+  totalCount: number;
+}
