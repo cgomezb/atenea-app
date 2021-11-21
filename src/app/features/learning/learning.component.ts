@@ -2,9 +2,10 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/
 import { MatDialog } from '@angular/material/dialog';
 import { Learning, LearningStatus, Page } from '@core/core.model';
 import { LearningService } from '@core/services';
-import { defaultPagination, learningHeaders } from '@features/learning';
+import { CreateLearningDialogComponent, defaultPagination, learningDialogConfig, learningHeaders } from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
 import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-learning',
@@ -32,7 +33,14 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
 
   onLearningCreated(): void {
-    console.log('onLearningCreated');
+    const dialogRef = this.dialog.open(CreateLearningDialogComponent, learningDialogConfig);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(learning => Boolean(learning))
+      )
+      .subscribe((learning: Learning) => this.createLearning(learning));
   }
 
   onLearningDeleted({ id }: Learning): void {
@@ -55,6 +63,10 @@ export class LearningComponent implements OnInit, OnDestroy {
 
   onUserAssigned(): void {
     console.log('onUserAssigned');
+  }
+
+  private createLearning(learning: Learning) {
+    console.log(learning);
   }
 
   ngOnDestroy(): void {

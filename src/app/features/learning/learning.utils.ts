@@ -7,3 +7,7 @@ export const defaultPagination: Page = {
 }
 
 export const learningHeaders: string[] = ['Name', 'Status', 'Actions'];
+
+export const learningDialogConfig = {
+  disableClose: true
+}
