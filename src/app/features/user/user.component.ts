@@ -5,6 +5,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { Subject } from 'rxjs';
 import { Page, User } from '@core/core.model';
 import { userHeaders } from '@features/user';
+import { CreateUserDialogComponent } from '@features/user/create-user-dialog/create-user-dialog.component';
+import { createUserDialogConfig, defaultPagination } from '@features/user/user.utils';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
@@ -24,14 +27,22 @@ export class UserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.userService.setParameters({ page: defaultPagination });
   }
 
   onSearchChanged(query: string): void {
-    console.log(query);
+    this.userService.setParameters({ query, page: defaultPagination });
   }
 
   onUserCreated(): void {
-    console.log('User created');
+    const dialogRef = this.dialog.open(CreateUserDialogComponent, createUserDialogConfig);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(user => Boolean(user))
+      )
+      .subscribe((user: User) => this.createUser(user));
   }
 
   onLearningDialogOpened({ learnings }: User) {
@@ -43,7 +54,18 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(page: Page): void {
-    console.log(page);
+    this.userService.setParameters({ query: this.userQuery.currentQuery(), page });
+  }
+
+  private createUser(user: User): void {  
+    this.userService.createUser(user)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Created');
+        },
+        (err: string) => console.log(`Error deleting user: ${err}`)
+      );
   }
 
   ngOnDestroy(): void {

@@ -15,8 +15,23 @@ describe('UserComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [UserComponent],
       providers: [
-        { provide: UserService, useValue: { }, },
-        { provide: UserQuery, useValue: { loading$: of(true), getValue: jest.fn() } },
+        {
+          provide: UserService,
+          useValue: {
+            setParameters: jest.fn(),
+            createUser: jest.fn()
+          },
+        },
+        {
+          provide: UserQuery,
+          useValue: {
+            loading$: of(true),
+            paging$: of(),
+            totalCount$: of(),
+            users$: of(),
+            getValue: jest.fn()
+          }
+        },
         { provide: MatDialog, useValue: { open: jest.fn(), afterClosed: of([]) }}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
