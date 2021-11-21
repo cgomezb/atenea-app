@@ -5,8 +5,10 @@ import { UserQuery } from '@features/user/store/user.query';
 import { MatDialog } from "@angular/material/dialog";
 import { UserComponent } from './user.component';
 import { of } from 'rxjs';
-import { Page } from '@core/core.model';
-import { defaultPagination } from '@features/user/user.utils';
+import { Page, User } from '@core/core.model';
+import { defaultPagination, userConfirmDialogConfig, userDialogConfig } from '@features/user/user.utils';
+import { CreateUserDialogComponent, LearningDialogComponent } from '@features/user';
+import { ConfirmDialogComponent } from '@shared/index';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -23,7 +25,8 @@ describe('UserComponent', () => {
           provide: UserService,
           useValue: {
             setParameters: jest.fn(),
-            createUser: jest.fn()
+            createUser: jest.fn(),
+            deleteUser: jest.fn()
           },
         },
         {
@@ -39,7 +42,7 @@ describe('UserComponent', () => {
             getValue: jest.fn()
           }
         },
-        { provide: MatDialog, useValue: { open: jest.fn(), afterClosed: of([]) }}
+        { provide: MatDialog, useValue: { open: jest.fn() }}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
@@ -85,6 +88,84 @@ describe('UserComponent', () => {
     expect(userService.setParameters).toHaveBeenCalledWith({
       query: 'smith',
       page: { page: 3, count: 10, offset: 20 }
+    });
+  });
+
+  describe('open the create user dialog', () => {
+    it('should call create user', () => {
+      const user: User = { avatar: '1', name: 'John Smith', email: 'jsmith' };
+      dialog.open = jest.fn().mockReturnValue({ afterClosed: () => of(user) });
+  
+      component.onUserCreated();
+  
+      expect(dialog.open).toHaveBeenCalledWith(CreateUserDialogComponent, userDialogConfig);
+      expect(userService.createUser).toHaveBeenCalledWith({
+        avatar: '1', name: 'John Smith', email: 'jsmith'
+      });
+    });
+
+    it('should not call create user', () => {
+      dialog.open = jest.fn().mockReturnValue({ afterClosed: () => of(false) });
+  
+      component.onUserCreated();
+  
+      expect(dialog.open).toHaveBeenCalledWith(CreateUserDialogComponent, userDialogConfig);
+      expect(userService.createUser).not.toHaveBeenCalled();
+    });
+  });
+  
+  describe('open the confirm dialog on delete user', () => {
+    it('should call delete user', () => {
+      const user: User = { id: '6b5032fd-fbe9-404c-99a0-20501a7ebd0b', avatar: '1', name: 'John Smith', email: 'jsmith' };
+      dialog.open = jest.fn().mockReturnValue({ afterClosed: () => of(true) });
+  
+      component.onUserDeleted(user);
+  
+      expect(dialog.open).toHaveBeenCalledWith(ConfirmDialogComponent, userConfirmDialogConfig);
+      expect(userService.deleteUser).toHaveBeenCalledWith('6b5032fd-fbe9-404c-99a0-20501a7ebd0b');
+    });
+
+    it('should not call delete user', () => {
+      const user: User = { id: '6b5032fd-fbe9-404c-99a0-20501a7ebd0b', avatar: '1', name: 'John Smith', email: 'jsmith' };
+      dialog.open = jest.fn().mockReturnValue({ afterClosed: () => of(false) });
+  
+      component.onUserDeleted(user);
+  
+      expect(dialog.open).toHaveBeenCalledWith(ConfirmDialogComponent, userConfirmDialogConfig);
+      expect(userService.deleteUser).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('learning dialog', () => {
+    it('should open the dialog', () => {
+      const user: User = {
+        id: '6b5032fd-fbe9-404c-99a0-20501a7ebd0b',
+        avatar: '1',
+        name: 'John Smith',
+        email: 'jsmith',
+        learnings: ['JavaScript']
+      };
+      const { learnings } = user;
+  
+      component.onLearningDialogOpened(user);
+  
+      expect(dialog.open).toHaveBeenCalledWith(
+        LearningDialogComponent,
+        { ...userDialogConfig, data: { learnings } }
+      );
+    });
+
+    it('should not open the dialog', () => {
+      const user: User = {
+        id: '6b5032fd-fbe9-404c-99a0-20501a7ebd0b',
+        avatar: '1',
+        name: 'John Smith',
+        email: 'jsmith'
+      };
+  
+      component.onLearningDialogOpened(user);
+  
+      expect(dialog.open).not.toHaveBeenCalled();
     });
   });
 
