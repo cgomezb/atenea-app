@@ -2,8 +2,16 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/
 import { MatDialog } from '@angular/material/dialog';
 import { Learning, LearningStatus, Page } from '@core/core.model';
 import { LearningService } from '@core/services';
-import { CreateLearningDialogComponent, defaultPagination, learningDialogConfig, learningHeaders } from '@features/learning';
+import {
+  CreateLearningDialogComponent,
+  AssignUsersDialogComponent,
+  defaultPagination,
+  learningConfirmDialogConfig,
+  learningDialogConfig,
+  learningHeaders
+} from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
+import { ConfirmDialogComponent } from '@shared/index';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -44,7 +52,16 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
 
   onLearningDeleted({ id }: Learning): void {
-    console.log('onUserDeleted');
+    if (!id) { return; }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, learningConfirmDialogConfig);
+    
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(toDelete => Boolean(toDelete))
+      )
+      .subscribe(() => this.deleteLearning(id));
   }
 
   onPageChanged(page: Page): void {
@@ -61,12 +78,45 @@ export class LearningComponent implements OnInit, OnDestroy {
     ].includes(status);
   }
 
-  onUserAssigned(): void {
-    console.log('onUserAssigned');
+  onUserAssigned({ id }: Learning): void {
+    if (!id) { return; }
+
+    const dialogRef = this.dialog.open(AssignUsersDialogComponent, learningDialogConfig);
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(learning => Boolean(learning))
+      )
+      .subscribe((assignUsers: string[]) => this.assignUsers(id, assignUsers));
   }
 
   private createLearning(learning: Learning) {
-    console.log(learning);
+    this.learningService.createLearning(learning)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Created');
+        },
+        (err: string) => console.log(`Error creating learning: ${err}`)
+      );
+  }
+
+  private deleteLearning(id: string) {
+    if (!id) { return; }
+  
+    this.learningService.deleteLearning(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Deleted');
+        },
+        (err) => console.log(`Error deleting learning: ${err}`)
+      );
+  }
+
+  private assignUsers(id: string, assignUsers: string[]) {
+    console.log(id, assignUsers);
   }
 
   ngOnDestroy(): void {
