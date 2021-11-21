@@ -68,8 +68,17 @@ export class LearningComponent implements OnInit, OnDestroy {
     this.learningService.setParameters({ query: this.learningQuery.currentQuery(), page });
   }
 
-  onStatusChanged({ id, status }: Learning) {
-    console.log('onStatusChanged');
+  onStatusChanged({ id }: Learning) {
+    if (!id) { return; }
+
+    this.learningService.updateLearningStatus(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Updated');
+        },
+        (err: string) => console.log(`Error updating learning status: ${err}`)
+      );
   }
 
   isArchiveStatus(status: LearningStatus) {

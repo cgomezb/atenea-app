@@ -5,7 +5,8 @@ import {
   Learning,
   LearningParameters,
   LearningQueryParameters,
-  LearningResponse
+  LearningResponse,
+  UpdateLearningResponse
 } from "@core/core.model";
 import { LearningBackEndService } from "@core/services/learning/learning-back-end-service";
 import { defaultPagination } from "@features/learning";
@@ -35,6 +36,13 @@ export class LearningService {
     this.store.setLoading(true);
 
     return this.learningClient.deleteLearning(learningId)
+      .pipe(tap(() => this.reloadLearnings()));
+  }
+
+  public updateLearningStatus(learningId: string): Observable<UpdateLearningResponse> {
+    this.store.setLoading(true);
+
+    return this.learningClient.updateLearningStatus(learningId)
       .pipe(tap(() => this.reloadLearnings()));
   }
 

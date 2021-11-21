@@ -82,3 +82,7 @@ export interface CreateLearningResponse {
 export interface DeleteLearningResponse {
   learningId: string;
 }
+
+export interface UpdateLearningResponse {
+  learningId: string;
+}

@@ -3,7 +3,8 @@ import {
   DeleteLearningResponse,
   Learning,
   LearningQueryParameters,
-  LearningResponse
+  LearningResponse,
+  LearningStatus
 } from "@core/core.model";
 import { learnings } from './learning.data';
 import { v4 as uuid } from 'uuid';
@@ -41,6 +42,27 @@ export class LearningBackEndService {
     this.learnings = this.learnings.filter(learning => learning.id !== learningId);
   
     return of({ learningId })
+      .pipe(delay(this.delayTime));
+  }
+
+  public updateLearningStatus(learningId: string): Observable<DeleteLearningResponse> {
+    let learning = this.learnings.find(learning => learning.id === learningId);
+  
+    if (learning) {
+      const status = learning.status === LearningStatus.archive
+        ? LearningStatus.unarchive
+        : LearningStatus.archive;
+
+      learning = {
+        ...learning,
+        status
+      };
+
+      return of({ learningId })
+      .pipe(delay(this.delayTime));
+    }
+
+    return of({ learningId: '' })
       .pipe(delay(this.delayTime));
   }
 
