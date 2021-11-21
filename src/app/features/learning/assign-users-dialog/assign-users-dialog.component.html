@@ -1,0 +1,19 @@
+<h3 mat-dialog-title>Assign Users</h3>
+
+<div mat-dialog-content align="center">
+  <form action="" [formGroup]="form">
+    <div>
+      <mat-form-field>
+        <mat-label>Users</mat-label>
+        <mat-select formControlName="users" multiple>
+          <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="center">
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</div>
