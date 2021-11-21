@@ -6,6 +6,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
   styleUrls: ['./loader.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class LoaderComponent {
   @Input() show = false;
   @Input() size = '100';

@@ -1,8 +1,7 @@
+@import '../../../styles/2-tools/mixins';
+
 .no-results {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  @include flex($direction:column);
   height: 490px;
 
   &__message {
