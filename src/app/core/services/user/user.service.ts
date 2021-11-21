@@ -25,11 +25,15 @@ export class UserService {
   ) {}
 
   public createUser(user: User): Observable<CreateUserResponse> {
+    this.store.setLoading(true);
+
     return this.userClient.createUser(user)
       .pipe(tap(() => this.reloadUsers()));
   }
 
   public deleteUser(userId: string): Observable<DeleteUserResponse> {
+    this.store.setLoading(true);
+
     return this.userClient.deleteUser(userId)
       .pipe(tap(() => this.reloadUsers()));
   }
