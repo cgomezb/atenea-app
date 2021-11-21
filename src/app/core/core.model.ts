@@ -67,3 +67,18 @@ export interface LearningResponse {
   learnings: Learning[];
   totalCount: number;
 }
+
+export interface LearningQueryParameters {
+  query: string;
+  page: string;
+  offset: string;
+  count: string;
+}
+
+export interface CreateLearningResponse {
+  learning: Learning;
+}
+
+export interface DeleteLearningResponse {
+  learningId: string;
+}
