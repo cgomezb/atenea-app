@@ -1,7 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { Page } from '@core/core.model';
 import { LearningService } from '@core/services';
+import { defaultPagination } from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
 import { of } from 'rxjs';
 
@@ -57,5 +59,13 @@ describe('LearningComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set initial paramaters on init', () => {
+    const page: Page = defaultPagination;
+
+    component.ngOnInit();
+
+    expect(learningService.setParameters).toHaveBeenCalledWith({ page });
   });
 });
