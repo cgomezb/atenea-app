@@ -5,3 +5,5 @@ export const defaultPagination: Page = {
   offset: 0,
   count: 10
 }
+
+export const learningHeaders: string[] = ['Name', 'Status', 'Actions'];

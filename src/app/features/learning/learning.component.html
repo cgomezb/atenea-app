@@ -1,1 +1,51 @@
-<p>Learning Component</p>
+<app-loader
+  *ngIf="(learningQuery.loading$ | async) as loading"
+  [show]="loading"
+  [opacity]="0.85">
+</app-loader>
+
+<div class="learning">
+  <div class="learning__container">
+    <div class="learning-header">
+      <div class="learning-header__search-control">
+        <app-search-control (search)="onSearchChanged($event)"></app-search-control>
+      </div>
+      <div class="learning-header__actions">
+        <button class="mat-raised-button mat-primary" (click)="onLearningCreated()">New</button>
+      </div>
+    </div>
+    <div class="learning-body">
+      <div class="learning-body__table">
+        <app-table *ngIf="(learningQuery.totalCount$ | async) as totalCount; else noRecords">
+          <thead table-header>
+            <tr>
+              <th *ngFor="let header of headers">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody table-body>
+            <tr *ngFor="let learning of (learningQuery.learnings$ | async)">
+              <td>{{learning.name}}</td>
+              <td>{{learning.status}}</td>
+              <td class="learning-actions">
+                <button
+                  class="learning-actions__button mat-raised-button mat-primary"
+                  (click)="onLearningDeleted(learning)"
+                >Delete</button>
+              </td>
+            </tr>
+        </app-table>
+        <ng-template #noRecords>
+          <app-no-results></app-no-results>
+        </ng-template>
+      </div>
+      <div class="learning-body__pagination" *ngIf="(learningQuery.totalCount$ | async)">
+        <app-pagination
+          [paging]="(learningQuery.paging$ | async)"
+          (pageChanged)="onPageChanged($event)"
+        ></app-pagination>
+      </div>
+    </div>
+
+  </div>
+</div>
+

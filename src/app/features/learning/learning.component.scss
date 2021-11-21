@@ -1,0 +1,40 @@
+@import '../../../styles/2-tools/mixins';
+
+.learning {
+  width: 100%;
+  min-height: 800px;
+
+  &__container {
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 40px auto;
+    border: 1px solid #e5e5e5;
+    box-shadow: 3px 4px 17px 2px rgb(10 20 29 / 10%);
+  }
+}
+
+.learning-header {
+  @include flex($alignWidth:space-between);
+  padding: 20px;
+}
+
+.learning-body {
+  @include flex($direction:column, $alignWidth:space-between, $alignHeight:stretch);
+  height: 100%;
+  padding-top: 20px;
+
+  &__pagination {
+    padding: 20px;
+    border: 1px solid #d0d0d0;
+  }
+}
+
+.learning-actions {
+  align-self: center;
+
+  &__button {
+    &:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+}
