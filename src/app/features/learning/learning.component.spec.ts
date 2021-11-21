@@ -70,6 +70,27 @@ describe('LearningComponent', () => {
     expect(learningService.setParameters).toHaveBeenCalledWith({ page });
   });
 
+  it('should set paramaters on search changed', () => {
+    const query = '';
+    const page: Page = defaultPagination;
+
+    component.onSearchChanged(query);
+
+    expect(learningService.setParameters).toHaveBeenCalledWith({ query, page });
+  });
+
+  it('should set paramaters on page changed', () => {
+    learningQuery.currentQuery = jest.fn().mockReturnValue('Java');
+    const page: Page = { page: 3, count: 10, offset: 20 };
+
+    component.onPageChanged(page);
+
+    expect(learningService.setParameters).toHaveBeenCalledWith({
+      query: 'Java',
+      page: { page: 3, count: 10, offset: 20 }
+    });
+  });
+
   describe('open the create learning dialog', () => {
     it('should call create learning', () => {
       const learning: Learning = { name: 'Javascript', status: LearningStatus.unarchive };

@@ -37,7 +37,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
 
   onSearchChanged(query: string): void {
-    console.log(query);
+    this.learningService.setParameters({ query, page: defaultPagination });
   }
 
   onLearningCreated(): void {
@@ -65,7 +65,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   }
 
   onPageChanged(page: Page): void {
-    console.log('onPageChanged');
+    this.learningService.setParameters({ query: this.learningQuery.currentQuery(), page });
   }
 
   onStatusChanged({ id, status }: Learning) {
