@@ -81,7 +81,7 @@ export class UserComponent implements OnInit, OnDestroy {
         () => {
           console.log('Created');
         },
-        (err: string) => console.log(`Error deleting user: ${err}`)
+        (err: string) => console.log(`Error creating user: ${err}`)
       );
   }
 
