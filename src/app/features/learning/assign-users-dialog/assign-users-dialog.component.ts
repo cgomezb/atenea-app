@@ -1,8 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserInfo, UserLearningInfoResponse } from '@core/core.model';
 import { BackEndService } from '@core/services/backend.service';
+
+export interface AssignUsersDialogData {
+  learningId: string;
+}
 
 @Component({
   selector: 'app-assign-users-dialog',
@@ -13,21 +17,22 @@ import { BackEndService } from '@core/services/backend.service';
 
 export class AssignUsersDialogComponent implements OnInit {
   public form: FormGroup;
-  public userInfo: UserInfo[];
+  public userInfo: UserInfo[] = [];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: AssignUsersDialogData,
     public dialogRef: MatDialogRef<AssignUsersDialogComponent>,
-    public userLearning: BackEndService
+    public userLearningClient: BackEndService
   ) {}
 
   ngOnInit(): void {
-    const learningId = '9d4fa871-93e8-4c3d-86cc-88b00c5eb035';
+    const learningId = this.dialogData.learningId;
 
     this.form = new FormGroup({
       users: new FormControl([])
     });
 
-    this.userLearning.getUserLearningInfo(learningId)
+    this.userLearningClient.getUserLearningInfo(learningId)
       .subscribe((userLearning: UserLearningInfoResponse) => this.setInternalValues(userLearning));
   }
 

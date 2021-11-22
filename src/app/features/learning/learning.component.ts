@@ -91,7 +91,10 @@ export class LearningComponent implements OnInit, OnDestroy {
   onUserAssigned({ id }: Learning): void {
     if (!id) { return; }
 
-    const dialogRef = this.dialog.open(AssignUsersDialogComponent, userLearningAssignDialogConfig);
+    const dialogRef = this.dialog.open(
+      AssignUsersDialogComponent,
+      { ...userLearningAssignDialogConfig, data: { learningId: id }
+    });
 
     dialogRef.afterClosed()
       .pipe(
