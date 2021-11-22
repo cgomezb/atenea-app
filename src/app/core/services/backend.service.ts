@@ -85,6 +85,7 @@ export class BackEndService {
 
   public deleteLearning(learningId: string): Observable<DeleteLearningResponse> {
     this.learnings = this.learnings.filter(learning => learning.id !== learningId);
+    this.userLearning = this.userLearning.filter(ul => ul.learningId !== learningId);
   
     return of({ learningId })
       .pipe(delay(this.delayTime));
@@ -122,7 +123,7 @@ export class BackEndService {
   }
 
   public assignUsers(learningId: string, assignUsers: string[]): Observable<boolean> {
-    const userLearning = this.userLearning.filter(ul => ul.learningId === learningId);
+    let userLearning = this.userLearning.filter(ul => ul.learningId === learningId);
 
     if (assignUsers.length > 0) {
       const newUserLearning: UserLearning = {
@@ -131,6 +132,8 @@ export class BackEndService {
       };
 
       userLearning.push(newUserLearning);
+    } else {
+      userLearning = this.userLearning.filter(ul => ul.learningId !== learningId);
     }
     
     this.userLearning = userLearning;

@@ -97,7 +97,10 @@ export class LearningComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed()
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(assignUsers => Boolean(assignUsers))
+      )
       .subscribe((assignUsers: string[]) => this.assignUsers(id, assignUsers));
   }
 

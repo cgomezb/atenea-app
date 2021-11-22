@@ -62,7 +62,10 @@ export class LearningService {
   }
 
   public assignUsers(learningId: string, assignUsers: string[]): Observable<boolean> {
-    return this.learningClient.assignUsers(learningId, assignUsers);
+    this.store.setLoading(true);
+
+    return this.learningClient.assignUsers(learningId, assignUsers)
+      .pipe(tap(() => this.reloadLearnings()));
   }
 
   public setParameters(parameters: Partial<LearningParameters>): void {
