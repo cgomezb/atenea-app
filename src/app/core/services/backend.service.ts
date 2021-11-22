@@ -126,11 +126,7 @@ export class BackEndService {
     let userLearning = this.userLearning.filter(ul => ul.learningId === learningId);
 
     if (assignUsers.length > 0) {
-      const newUserLearning: UserLearning = {
-        learningId,
-        users: assignUsers
-      };
-
+      const newUserLearning: UserLearning = { learningId, users: assignUsers };
       userLearning.push(newUserLearning);
     } else {
       userLearning = this.userLearning.filter(ul => ul.learningId !== learningId);
@@ -143,11 +139,17 @@ export class BackEndService {
   }
 
   private getUserLearnings(users: User[]): User[] {
+    let usersWithLearnings: User[] = [];
+ 
     users.forEach(user => {
-      user.learnings = this.getLearningsByUserId(user.id ? user.id : '');
+      const userWithLearning = {
+        ...user,
+        learnings: this.getLearningsByUserId(user.id ? user.id : '')
+      }
+      usersWithLearnings.push(userWithLearning);
     });
 
-    return users;
+    return usersWithLearnings;
   }
 
   private getLearningsByUserId(userId: string): string[] {
