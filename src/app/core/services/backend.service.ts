@@ -71,6 +71,7 @@ export class BackEndService {
 
   public deleteUser(userId: string): Observable<DeleteUserResponse> {
     this.users = this.users.filter(user => user.id !== userId);
+    this.deleteUserFromUserLearning(userId);
   
     return of({ userId })
       .pipe(delay(this.delayTime));
@@ -156,16 +157,15 @@ export class BackEndService {
   }
 
   public assignUsers(learningId: string, assignUsers: string[]): Observable<boolean> {
-    let userLearning = this.userLearning.filter(ul => ul.learningId === learningId);
+    const userLearning = this.userLearning.find(ul => ul.learningId === learningId);
+    const usersLearning = this.userLearning.filter(ul => ul.learningId !== learningId);
 
-    if (assignUsers.length > 0) {
-      const newUserLearning: UserLearning = { learningId, users: assignUsers };
-      userLearning.push(newUserLearning);
-    } else {
-      userLearning = this.userLearning.filter(ul => ul.learningId !== learningId);
+    if (userLearning) {
+      const newUserLearning: UserLearning = { ...userLearning, users: assignUsers };
+      usersLearning.push(newUserLearning);
     }
-    
-    this.userLearning = userLearning;
+
+    this.userLearning = usersLearning;
 
     return of(true)
       .pipe(delay(this.delayTime));
@@ -216,6 +216,25 @@ export class BackEndService {
     }
 
     return [];
+  }
+
+  private deleteUserFromUserLearning(userId: string) {
+    let usersLearning: UserLearning[] = [];
+
+    this.userLearning.forEach(ul => {
+      let users = [];
+
+      if (ul.users.includes(userId)) {
+        users = ul.users.filter(u => u !== userId);
+
+        const userLearning = { ...ul, users };
+        usersLearning.push(userLearning);
+      } else {
+        usersLearning.push(ul);
+      }
+    });
+
+    this.userLearning = usersLearning;
   }
 
   private generateId(): string {
