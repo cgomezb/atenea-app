@@ -35,14 +35,27 @@ export class BackEndService {
   // User
 
   public getUsers({ query, offset, count }: UserQueryParameters): Observable<UserResponse> {
-    const filtered = this.users.filter(user => user.name.search(new RegExp(query, 'gi')) >= 0 ||
+    let filtered = this.users.filter(user => user.name.search(new RegExp(query, 'gi')) >= 0 ||
       user.email.search(new RegExp(query, 'gi')) >= 0);
 
-    let paged = filtered.slice(parseInt(offset), parseInt(offset) + parseInt(count));
+    if (filtered.length > 0) {
+      filtered = this.getUserLearnings(filtered);
+      filtered = filtered.sort((a, b) => {
+        const nameA = a.name.toUpperCase(); 
+        const nameB = b.name.toUpperCase();
 
-    if (paged.length > 0) {
-      paged = this.getUserLearnings(paged);
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        return 0;
+      });
     }
+
+    const paged = filtered.slice(parseInt(offset), parseInt(offset) + parseInt(count));
 
     return of({ users: paged, totalCount: filtered.length })
       .pipe(delay(this.delayTime));
@@ -66,8 +79,24 @@ export class BackEndService {
   // Learning
 
   public getLearnings({ query, offset, count }: LearningQueryParameters): Observable<LearningResponse> {
-    const filtered = this.learnings.filter(learning => learning.name.search(new RegExp(query, 'gi')) >= 0 ||
+    let filtered = this.learnings.filter(learning => learning.name.search(new RegExp(query, 'gi')) >= 0 ||
       learning.status.search(new RegExp(query, 'gi')) >= 0);
+
+    if (filtered.length > 0) {
+      filtered = filtered.sort((a, b) => {
+        const nameA = a.name.toUpperCase(); 
+        const nameB = b.name.toUpperCase();
+
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        return 0;
+      });
+    }
 
     const paged = filtered.slice(parseInt(offset), parseInt(offset) + parseInt(count));
 
@@ -93,16 +122,20 @@ export class BackEndService {
 
   public updateLearningStatus(learningId: string): Observable<DeleteLearningResponse> {
     let learning = this.learnings.find(learning => learning.id === learningId);
+    let learnings = this.learnings.filter(learning => learning.id !== learningId);
   
     if (learning) {
       const status = learning.status === LearningStatus.archive
         ? LearningStatus.unarchive
         : LearningStatus.archive;
 
-      learning = {
+      const updatedLearning = {
         ...learning,
         status
       };
+
+      learnings.push(updatedLearning);
+      this.learnings = learnings;
 
       return of({ learningId })
       .pipe(delay(this.delayTime));
