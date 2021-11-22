@@ -7,7 +7,7 @@ import {
   UserQueryParameters,
   UserResponse
 } from "@core/core.model";
-import { UserBackEndService } from "@core/services/user/user-back-end-service";
+import { BackEndService } from "@core/services/backend.service";
 import { defaultPagination } from "@features/user";
 import { UserStore } from "@features/user/store/user.store";
 import { Observable } from "rxjs";
@@ -21,7 +21,7 @@ export class UserService {
 
   constructor(
     private store: UserStore,
-    public userClient: UserBackEndService
+    public userClient: BackEndService
   ) {}
 
   public createUser(user: User): Observable<CreateUserResponse> {

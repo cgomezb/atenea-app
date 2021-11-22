@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CreateUserResponse, DeleteUserResponse, User, UserParameters, UserQueryParameters, UserResponse } from '@core/core.model';
-import { UserService, UserBackEndService } from '@core/services';
+import { BackEndService, UserService } from '@core/services';
 import { users } from '@core/services/user/user.data';
 import { UserStore } from '@features/user/store/user.store';
 import { of } from 'rxjs';
@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 describe('UserService', () => {
   let service: UserService;
   let store: UserStore;
-  let userClient: UserBackEndService;
+  let userClient: BackEndService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('UserService', () => {
           }
         },
         {
-          provide: UserBackEndService,
+          provide: BackEndService,
           useValue: {
             createUser: jest.fn(),
             deleteUser: jest.fn(),
@@ -33,7 +33,7 @@ describe('UserService', () => {
 
     service = TestBed.inject(UserService);
     store = TestBed.inject(UserStore);
-    userClient = TestBed.inject(UserBackEndService);
+    userClient = TestBed.inject(BackEndService);
   });
 
   it('should create', () => {

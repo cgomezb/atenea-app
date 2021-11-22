@@ -8,7 +8,8 @@ import {
   defaultPagination,
   learningConfirmDialogConfig,
   learningDialogConfig,
-  learningHeaders
+  learningHeaders,
+  userLearningAssignDialogConfig
 } from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
 import { ConfirmDialogComponent } from '@shared/index';
@@ -90,7 +91,7 @@ export class LearningComponent implements OnInit, OnDestroy {
   onUserAssigned({ id }: Learning): void {
     if (!id) { return; }
 
-    const dialogRef = this.dialog.open(AssignUsersDialogComponent, learningDialogConfig);
+    const dialogRef = this.dialog.open(AssignUsersDialogComponent, userLearningAssignDialogConfig);
 
     dialogRef.afterClosed()
       .pipe(
@@ -100,7 +101,7 @@ export class LearningComponent implements OnInit, OnDestroy {
       .subscribe((assignUsers: string[]) => this.assignUsers(id, assignUsers));
   }
 
-  private createLearning(learning: Learning) {
+  private createLearning(learning: Learning): void {
     this.learningService.createLearning(learning)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -111,7 +112,7 @@ export class LearningComponent implements OnInit, OnDestroy {
       );
   }
 
-  private deleteLearning(id: string) {
+  private deleteLearning(id: string): void {
     if (!id) { return; }
   
     this.learningService.deleteLearning(id)
@@ -124,8 +125,15 @@ export class LearningComponent implements OnInit, OnDestroy {
       );
   }
 
-  private assignUsers(id: string, assignUsers: string[]) {
-    console.log(id, assignUsers);
+  private assignUsers(id: string, assignUsers: string[]): void {
+    this.learningService.assignUsers(id, assignUsers)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          console.log('Users Assigned');
+        },
+        (err) => console.log(`Error assigning users: ${err}`)
+      );
   }
 
   ngOnDestroy(): void {

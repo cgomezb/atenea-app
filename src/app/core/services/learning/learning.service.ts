@@ -8,7 +8,7 @@ import {
   LearningResponse,
   UpdateLearningResponse
 } from "@core/core.model";
-import { LearningBackEndService } from "@core/services/learning/learning-back-end-service";
+import { BackEndService } from "@core/services/backend.service";
 import { defaultPagination } from "@features/learning";
 import { LearningStore } from "@features/learning/store/learning.store";
 import { Observable } from "rxjs";
@@ -22,7 +22,7 @@ export class LearningService {
 
   constructor(
     private store: LearningStore,
-    public learningClient: LearningBackEndService
+    public learningClient: BackEndService
   ) {}
 
   public createLearning(learning: Learning): Observable<CreateLearningResponse> {
@@ -59,6 +59,10 @@ export class LearningService {
           this.store.setLoading(false);
         }
       );
+  }
+
+  public assignUsers(learningId: string, assignUsers: string[]): Observable<boolean> {
+    return this.learningClient.assignUsers(learningId, assignUsers);
   }
 
   public setParameters(parameters: Partial<LearningParameters>): void {

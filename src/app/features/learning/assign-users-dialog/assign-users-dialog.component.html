@@ -6,7 +6,7 @@
       <mat-form-field>
         <mat-label>Users</mat-label>
         <mat-select formControlName="users" multiple>
-          <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
+          <mat-option *ngFor="let user of userInfo" [value]="user.id">{{user.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

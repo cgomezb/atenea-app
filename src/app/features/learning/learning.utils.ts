@@ -14,6 +14,12 @@ export const learningDialogConfig = {
   disableClose: true
 }
 
+export const userLearningAssignDialogConfig = {
+  disableClose: true,
+  width: '500px',
+  height: '250px'
+}
+
 export const learningConfirmDialogConfig = {
   disableClose: true,
   data: {

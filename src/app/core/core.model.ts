@@ -45,6 +45,7 @@ export interface DeleteUserResponse {
   userId: string;
 }
 
+
 // Learning
 
 export interface Learning {
@@ -85,4 +86,22 @@ export interface DeleteLearningResponse {
 
 export interface UpdateLearningResponse {
   learningId: string;
+}
+
+
+// User Learning
+
+export interface UserLearning {
+  learningId: string;
+  users: string[];
+}
+
+export interface UserLearningInfoResponse {
+  usersInfo: UserInfo[];
+  usersAssigned: string[];
+}
+
+export interface UserInfo {
+  id: string;
+  name: string;
 }

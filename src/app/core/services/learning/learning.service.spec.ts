@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CreateLearningResponse, DeleteLearningResponse, Learning, LearningParameters, LearningQueryParameters, LearningResponse, LearningStatus } from '@core/core.model';
-import { LearningService, LearningBackEndService } from '@core/services';
+import { LearningService, BackEndService } from '@core/services';
 import { learnings } from '@core/services/learning/learning.data';
 import { LearningStore } from '@features/learning/store/learning.store';
 import { of } from 'rxjs';
@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 describe('LearningService', () => {
   let service: LearningService;
   let store: LearningStore;
-  let learningClient: LearningBackEndService;
+  let learningClient: BackEndService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('LearningService', () => {
           }
         },
         {
-          provide: LearningBackEndService,
+          provide: BackEndService,
           useValue: {
             createLearning: jest.fn(),
             deleteLearning: jest.fn(),
@@ -33,7 +33,7 @@ describe('LearningService', () => {
 
     service = TestBed.inject(LearningService);
     store = TestBed.inject(LearningStore);
-    learningClient = TestBed.inject(LearningBackEndService);
+    learningClient = TestBed.inject(BackEndService);
   });
 
   it('should create', () => {
