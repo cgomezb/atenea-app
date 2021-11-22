@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
@@ -8,7 +9,8 @@ import { MainLayoutComponent } from '.';
   declarations: [MainLayoutComponent],
   imports: [
     BrowserModule,
-    RouterModule
+    RouterModule,
+    MatSnackBarModule
   ],
   exports: [MainLayoutComponent]
 })

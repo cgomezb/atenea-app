@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Learning, LearningStatus, Page } from '@core/core.model';
-import { LearningService } from '@core/services';
+import { LearningService, NotificationService } from '@core/services';
 import {
   CreateLearningDialogComponent,
   AssignUsersDialogComponent,
@@ -30,7 +30,8 @@ export class LearningComponent implements OnInit, OnDestroy {
   constructor(
     public learningService: LearningService,
     public learningQuery: LearningQuery,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -75,10 +76,8 @@ export class LearningComponent implements OnInit, OnDestroy {
     this.learningService.updateLearningStatus(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Updated');
-        },
-        (err: string) => console.log(`Error updating learning status: ${err}`)
+        () => this.notificationService.showMessage('Status updated'),
+        (err: string) => this.notificationService.showMessage(`Error updating learning status: ${err}`)
       );
   }
 
@@ -108,10 +107,8 @@ export class LearningComponent implements OnInit, OnDestroy {
     this.learningService.createLearning(learning)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Created');
-        },
-        (err: string) => console.log(`Error creating learning: ${err}`)
+        () => this.notificationService.showMessage('Learning created'),
+        (err: string) => this.notificationService.showMessage(`Error creating learning: ${err}`)
       );
   }
 
@@ -121,10 +118,8 @@ export class LearningComponent implements OnInit, OnDestroy {
     this.learningService.deleteLearning(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Deleted');
-        },
-        (err) => console.log(`Error deleting learning: ${err}`)
+        () => this.notificationService.showMessage('Learning deleted'),
+        (err) => this.notificationService.showMessage(`Error deleting learning: ${err}`)
       );
   }
 
@@ -132,10 +127,8 @@ export class LearningComponent implements OnInit, OnDestroy {
     this.learningService.assignUsers(id, assignUsers)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Users Assigned');
-        },
-        (err) => console.log(`Error assigning users: ${err}`)
+        () => this.notificationService.showMessage('Users Assigned'),
+        (err) => this.notificationService.showMessage(`Error assigning users: ${err}`)
       );
   }
 

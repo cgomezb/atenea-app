@@ -15,7 +15,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ]
 })
 

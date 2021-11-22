@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '@core/services';
+import { NotificationService, UserService } from '@core/services';
 import { UserQuery } from '@features/user/store/user.query';
 import { MatDialog } from "@angular/material/dialog";
 import { Subject } from 'rxjs';
@@ -9,7 +9,11 @@ import {
   CreateUserDialogComponent,
   LearningDialogComponent
 } from '@features/user';
-import { userDialogConfig, defaultPagination, userConfirmDialogConfig } from '@features/user/user.utils';
+import {
+  userDialogConfig,
+  defaultPagination,
+  userConfirmDialogConfig
+} from '@features/user/user.utils';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ConfirmDialogComponent } from '@shared/index';
 
@@ -27,7 +31,8 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(
     public userService: UserService,
     public userQuery: UserQuery,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -78,10 +83,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userService.createUser(user)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Created');
-        },
-        (err: string) => console.log(`Error creating user: ${err}`)
+        () => this.notificationService.showMessage('User created'),
+        (err: string) => this.notificationService.showMessage(`Error creating user: ${err}`)
       );
   }
 
@@ -91,10 +94,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userService.deleteUser(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        () => {
-          console.log('Deleted');
-        },
-        (err) => console.log(`Error deleting user: ${err}`)
+        () => this.notificationService.showMessage('User deleted'),
+        (err) => this.notificationService.showMessage(`Error deleting user: ${err}`)
       );
   }
 

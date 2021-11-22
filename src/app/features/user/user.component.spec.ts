@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserService } from '@core/services';
+import { NotificationService, UserService } from '@core/services';
 import { UserQuery } from '@features/user/store/user.query';
 import { MatDialog } from "@angular/material/dialog";
 import { UserComponent } from './user.component';
@@ -42,6 +42,7 @@ describe('UserComponent', () => {
             getValue: jest.fn()
           }
         },
+        { provide: NotificationService, useValue: { showMessage: jest.fn() }},
         { provide: MatDialog, useValue: { open: jest.fn() }}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]

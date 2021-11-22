@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Learning, LearningStatus, Page } from '@core/core.model';
-import { LearningService } from '@core/services';
+import { LearningService, NotificationService } from '@core/services';
 import {
   AssignUsersDialogComponent,
   CreateLearningDialogComponent,
@@ -50,6 +50,7 @@ describe('LearningComponent', () => {
             getValue: jest.fn()
           }
         },
+        { provide: NotificationService, useValue: { showMessage: jest.fn() }},
         { provide: MatDialog, useValue: { open: jest.fn() }}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
