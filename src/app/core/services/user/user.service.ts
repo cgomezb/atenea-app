@@ -59,6 +59,7 @@ export class UserService {
   }
 
   public reloadUsers(): void {
+    this.store.update({ page: defaultPagination });
     this.getUsers({ page: defaultPagination });
   }
 

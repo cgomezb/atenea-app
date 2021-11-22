@@ -74,6 +74,7 @@ export class LearningService {
   }
 
   public reloadLearnings(): void {
+    this.store.update({ page: defaultPagination });
     this.getLearnings({ page: defaultPagination });
   }
 
