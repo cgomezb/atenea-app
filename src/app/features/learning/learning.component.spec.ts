@@ -3,7 +3,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Learning, LearningStatus, Page } from '@core/core.model';
 import { LearningService } from '@core/services';
-import { CreateLearningDialogComponent, defaultPagination, learningConfirmDialogConfig, learningDialogConfig } from '@features/learning';
+import {
+  AssignUsersDialogComponent,
+  CreateLearningDialogComponent,
+  defaultPagination,
+  learningConfirmDialogConfig,
+  learningDialogConfig,
+  userLearningAssignDialogConfig
+} from '@features/learning';
 import { LearningQuery } from '@features/learning/store/learning.query';
 import { ConfirmDialogComponent } from '@shared/index';
 import { of } from 'rxjs';
@@ -26,7 +33,8 @@ describe('LearningComponent', () => {
           useValue: {
             setParameters: jest.fn(),
             createLearning: jest.fn(),
-            deleteLearning: jest.fn()
+            deleteLearning: jest.fn(),
+            assignUsers: jest.fn()
           },
         },
         {
@@ -133,6 +141,22 @@ describe('LearningComponent', () => {
   
       expect(dialog.open).toHaveBeenCalledWith(ConfirmDialogComponent, learningConfirmDialogConfig);
       expect(learningService.deleteLearning).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('open the assign users dialog', () => {
+    it('should call assign users', () => {
+      const learning: Learning = { id: '6b5032fd-fbe9-404c-99a0-20501a7ebd0b', name: 'Javascript', status: LearningStatus.unarchive };
+      const { id } = learning;
+      dialog.open = jest.fn().mockReturnValue({ afterClosed: () => of([]) });
+
+      component.onUserAssigned(learning);
+  
+      expect(dialog.open).toHaveBeenCalledWith(
+        AssignUsersDialogComponent,
+        { ...userLearningAssignDialogConfig, data: { learningId: id }}
+      );
+      expect(learningService.assignUsers).toHaveBeenCalledWith('6b5032fd-fbe9-404c-99a0-20501a7ebd0b', []);
     });
   });
 });
