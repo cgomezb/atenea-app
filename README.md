@@ -1,14 +1,12 @@
-# AteneaApp
+# Atenea App (User and Learning)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
 
+<img width="872" alt="Screen Shot 2021-11-22 at 1 02 51 AM" src="https://user-images.githubusercontent.com/3834909/142808991-862c551a-c520-4ccb-a37c-fcc4f8c284fe.png">
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Build
 
@@ -16,12 +14,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Jest](https://jestjs.io/).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## References
 
-## Further help
+[Angular Architect](https://tomastrajan.medium.com/how-to-build-epic-angular-app-with-clean-architecture-91640ed1656).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[ITCSS](https://developer.helpscout.com/seed/glossary/itcss/#:~:text=ITCSS%20is%20a%20CSS%20architecture,with%20mindful%20CSS%20code%20organization.)
